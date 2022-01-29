@@ -4,7 +4,7 @@ pygame.init()
 # game hyperparameters
 size = width, height = 512, 512
 speed = 3
-growth_speed = 1
+growth_speed = 4
 game_time = 120
 velocity = [0, 0]
 black = 0, 0, 0
@@ -92,19 +92,19 @@ while playing:
     for event in pygame.event.get():
         # handle quitting the game
         if event.type == pygame.QUIT: sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_DOWN or event.key == pygame.K_s):
             # move down
             velocity[0]=0
             velocity[1]=speed
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_UP or event.key == pygame.K_w):
             # move up
             velocity[0]=0
             velocity[1]=-speed
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_RIGHT or event.key == pygame.K_d):
             # move right
             velocity[0]=speed
             velocity[1]=0
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_LEFT or event.key == pygame.K_a):
             # move left
             velocity[0]=-speed
             velocity[1]=0
