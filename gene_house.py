@@ -73,11 +73,14 @@ class Tomato():
         score[0] = new_score
 
 
+# when game is over, display player's score than close after 5 seconds
 def game_over():
     screen.fill(white)
     game_over_text = font.render("Game Over! Your Score = "+str(score[0]), True, (10,10,10))
-    screen.blit(game_over_text, (0,0))
+    screen.blit(game_over_text, (100, 100))
     pygame.display.flip()
+    pygame.time.delay(5000)
+    sys.exit()
 
 # main game loop
 playing = True
