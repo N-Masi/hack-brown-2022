@@ -11,4 +11,4 @@ Image assets by [Shubibubi](https://shubibubi.itch.io/).
 
 ## GAME INSTRUCTIONS:
 
-Use the arrow keys or WASD to move your farmer around. Use the T key to plant a tomato, after a few seconds, it will be fully ripe and you can retrieve it using the R key while standing near it. Be quick though! The tomatoes rot quickly and may disappear before you can harvest them. You also may not plant tomato seeds too close to each other. How many tomatoes can you retrieve before time runs up! Find out in Gene House.
+Use the arrow keys or WASD to move your farmer around. Use the T key to plant a tomato, after a few seconds, it will be fully ripe and you can retrieve it using the R key while standing near it. Be quick though! The tomatoes rot quickly and may disappear before you can harvest them. You also may not plant tomato seeds too close to each other. How many tomatoes can you retrieve before time runs up? Find out in Gene House!
