@@ -10,10 +10,16 @@ screen = pygame.display.set_mode(size)
 
 ball = pygame.image.load("intro_ball.gif")
 ballrect = ball.get_rect()
+clock = pygame.time.Clock()
 
 while 1:
+    clock.tick(60)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                speed[0]*=2
+                speed[1]*=2
 
     ballrect = ballrect.move(speed)
     if ballrect.left < 0 or ballrect.right > width:
