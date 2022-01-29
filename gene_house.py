@@ -4,6 +4,7 @@ pygame.init()
 # game hyperparameters
 size = width, height = 512, 512
 speed = 3
+growth_speed = 2
 velocity = [0, 0]
 black = 0, 0, 0
 
@@ -39,9 +40,9 @@ class Tomato():
         self.timestamp = pygame.time.get_ticks()//1000
         self.growth_stage = 0
 
-    # grow the tomato every 5 seconds
+    # grow the tomato every growth_speed seconds
     def check_grow(self):
-        if time - self.timestamp >= 5:
+        if time - self.timestamp >= growth_speed:
             self.grow()
             self.timestamp = time
 
@@ -63,9 +64,15 @@ class Tomato():
             # delete the crop by removing it from the crop list
             crops.remove(self)
 
+    def retrieve(self):
+        # retrieve crop by removing it's image and increasing score
+        crops.remove(self)
+        nonlocal score
+        score += 1
 
 # main game loop
-while 1:
+playing = True
+while playing:
     # tick clock & update time & score
     clock.tick(60)
     time = pygame.time.get_ticks()//1000
@@ -78,18 +85,23 @@ while 1:
         # handle quitting the game
         if event.type == pygame.QUIT: sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            # move down
             velocity[0]=0
             velocity[1]=speed
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            # move up
             velocity[0]=0
             velocity[1]=-speed
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            # move right
             velocity[0]=speed
             velocity[1]=0
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            # move left
             velocity[0]=-speed
             velocity[1]=0
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_t:
+            # plant a new tomato
             tomato = Tomato()
             valid_spot = True
             # test if the new tomato would overlap an old one
@@ -99,6 +111,16 @@ while 1:
             # add the tomato to crops if it doesn't overlap any other crop
             if valid_spot:
                 crops.append(tomato)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+            # retrieve a tomato
+            grown_tomatoes = []
+            # test if the player is overlapping any grown tomatoes
+            for crop in crops:
+                if pygame.Rect.colliderect(player_rect, crop.crop_rect) and crop.growth_stage == 4:
+                    grown_tomatoes.append(crop)
+            # retrive those tomatoes
+            for crop in grown_tomatoes:
+                crop.retrieve()
         else:
             velocity[0]=0
             velocity[1]=0
