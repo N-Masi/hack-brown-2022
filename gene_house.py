@@ -4,7 +4,7 @@ pygame.init()
 # game hyperparameters
 size = width, height = 512, 512
 speed = 3
-growth_speed = 4
+growth_speed = 3
 game_time = 120
 velocity = [0, 0]
 black = 0, 0, 0
@@ -72,7 +72,6 @@ class Tomato():
         new_score = score[0] + 1
         score[0] = new_score
 
-
 # when game is over, display player's score than close after 5 seconds
 def game_over():
     screen.fill(white)
@@ -95,19 +94,19 @@ while playing:
     for event in pygame.event.get():
         # handle quitting the game
         if event.type == pygame.QUIT: sys.exit()
-        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_DOWN or event.key == pygame.K_s):
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             # move down
             velocity[0]=0
             velocity[1]=speed
-        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_UP or event.key == pygame.K_w):
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             # move up
             velocity[0]=0
             velocity[1]=-speed
-        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_RIGHT or event.key == pygame.K_d):
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             # move right
             velocity[0]=speed
             velocity[1]=0
-        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_LEFT or event.key == pygame.K_a):
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             # move left
             velocity[0]=-speed
             velocity[1]=0
