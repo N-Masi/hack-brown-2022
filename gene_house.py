@@ -5,7 +5,7 @@ pygame.init()
 size = width, height = 512, 512
 speed = 3
 growth_speed = 4
-game_time = 120
+game_time = 60
 velocity = [0, 0]
 black = 0, 0, 0
 white = 255, 255, 255
