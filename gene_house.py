@@ -37,24 +37,31 @@ class Tomato():
         self.image = pygame.image.load("assets/seeds.png")
         self.crop_rect = player_rect.copy().move(70,50)
         self.timestamp = pygame.time.get_ticks()//1000
+        self.growth_stage = 0
 
+    # grow the tomato every 5 seconds
     def check_grow(self):
         if time - self.timestamp >= 5:
             self.grow()
             self.timestamp = time
 
+    # advance the tomato to the next stage of growth
     def grow(self):
-        pass
-        if self.image == pygame.image.load("assets/seeds.png")
+        if self.growth_stage == 0:
+            self.growth_stage = 1
             self.image = pygame.image.load("assets/bud.png")
-
-        elif self.image == pygame.image.load("assets/bud.png")
+        elif self.growth_stage == 1:
+            self.growth_stage = 2
             self.image = pygame.image.load("assets/sprout.png")
-
-        elif self.image == pygame.image.load("assets/sprout.png")
+        elif self.growth_stage == 2:
+            self.growth_stage = 3
             self.image = pygame.image.load("assets/tomato_bloom.png")
-
-        else pass
+        elif self.growth_stage == 3:
+            self.growth_stage = 4
+            self.image = pygame.image.load("assets/tomato_transparent.png")
+        else:
+            # delete the crop by removing it from the crop list
+            crops.remove(self)
 
 
 # main game loop
