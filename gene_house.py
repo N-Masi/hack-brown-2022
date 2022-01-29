@@ -70,6 +70,11 @@ class Tomato():
         nonlocal score
         score += 1
 
+def game_over():
+    screen.fill(white)
+    game_over_text = font.render("Game Over! Your Score = "+str(score), True, (10,10,10))
+    pygame.display.flip()
+
 # main game loop
 playing = True
 while playing:
@@ -148,3 +153,6 @@ while playing:
         screen.blit(crop.image, crop.crop_rect)
     screen.blit(player, player_rect)
     pygame.display.flip()
+
+    if time == 120:
+        game_over()
