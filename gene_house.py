@@ -63,6 +63,10 @@ class Tomato():
             # delete the crop by removing it from the crop list
             crops.remove(self)
 
+def game_over():
+    screen.fill(white)
+    game_over_text = font.render("Game Over! Your Score = "+str(score), True, (10,10,10))
+    pygame.display.flip()
 
 # main game loop
 while 1:
@@ -126,3 +130,6 @@ while 1:
         screen.blit(crop.image, crop.crop_rect)
     screen.blit(player, player_rect)
     pygame.display.flip()
+
+    if time == 120:
+        game_over()
