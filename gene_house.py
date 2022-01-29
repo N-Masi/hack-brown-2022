@@ -39,6 +39,16 @@ class Totato():
 
     def grow(self):
         pass
+        if self.image == pygame.image.load("assets/seeds.png")
+            self.image = pygame.image.load("assets/bud.png")
+
+        elif self.image == pygame.image.load("assets/bud.png")
+            self.image = pygame.image.load("assets/sprout.png")
+
+        elif self.image == pygame.image.load("assets/sprout.png")
+            self.image = pygame.image.load("assets/tomato_bloom.png")
+
+        else pass
 
 
 # main game loop
