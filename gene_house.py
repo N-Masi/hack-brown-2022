@@ -11,8 +11,8 @@ black = 0, 0, 0
 screen = pygame.display.set_mode(size)
 
 # load & initalize images
-background = pygame.image.load("background.png")
-player = pygame.image.load("char_walk_right.gif")
+background = pygame.image.load("assets/background.png")
+player = pygame.image.load("assets/char_walk_right.gif")
 player_rect = player.get_rect()
 
 # initialize clock
@@ -31,11 +31,11 @@ scoretextpos = text.get_rect(x=300, y=10)
 crops = []
 
 # potato class
-class Potato():
+class Totato():
 
     def __init__(self):
-        self.image = pygame.image.load("potato_seeds.png")
-        self.crop_rect = player_rect
+        self.image = pygame.image.load("assets/seeds.png")
+        self.crop_rect = player_rect.copy().move(70,50)
 
     def grow(self):
         pass
@@ -66,9 +66,9 @@ while 1:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             velocity[0]=-speed
             velocity[1]=0
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-            potato = Potato()
-            crops.append(potato)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_t:
+            totato = Totato()
+            crops.append(totato)
         else:
             velocity[0]=0
             velocity[1]=0
@@ -88,10 +88,10 @@ while 1:
     # redraw the screen
     screen.fill(black)
     screen.blit(background, (0,0))
-    screen.blit(player, player_rect)
     screen.blit(text, textpos)
     screen.blit(score_text, scoretextpos)
     # draw everything in the crops list
     for crop in crops:
         screen.blit(crop.image, crop.crop_rect)
+    screen.blit(player, player_rect)
     pygame.display.flip()
