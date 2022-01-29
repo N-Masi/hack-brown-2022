@@ -4,9 +4,11 @@ pygame.init()
 # game hyperparameters
 size = width, height = 512, 512
 speed = 3
-growth_speed = 2
+growth_speed = 1
+game_time = 120
 velocity = [0, 0]
 black = 0, 0, 0
+white = 255, 255, 255
 
 # display screen
 screen = pygame.display.set_mode(size)
@@ -24,8 +26,8 @@ font = pygame.font.Font(None, 32)
 time = 0
 text = font.render("Time: "+str(time), True, (10, 10, 10))
 textpos = text.get_rect(x=100, y=10)
-score = 0
-score_text = font.render("Score: "+str(score), True, (10, 10, 10))
+score = [0]
+score_text = font.render("Score: "+str(score[0]), True, (10, 10, 10))
 scoretextpos = text.get_rect(x=300, y=10)
 
 # create list of crops
@@ -67,12 +69,14 @@ class Tomato():
     def retrieve(self):
         # retrieve crop by removing it's image and increasing score
         crops.remove(self)
-        nonlocal score
-        score += 1
+        new_score = score[0] + 1
+        score[0] = new_score
+
 
 def game_over():
     screen.fill(white)
-    game_over_text = font.render("Game Over! Your Score = "+str(score), True, (10,10,10))
+    game_over_text = font.render("Game Over! Your Score = "+str(score[0]), True, (10,10,10))
+    screen.blit(game_over_text, (0,0))
     pygame.display.flip()
 
 # main game loop
@@ -82,8 +86,7 @@ while playing:
     clock.tick(60)
     time = pygame.time.get_ticks()//1000
     text = font.render("Time: "+str(time), True, (10, 10, 10))
-    score = 0
-    score_text = font.render("Score: "+str(score), True, (10, 10, 10))
+    score_text = font.render("Score: "+str(score[0]), True, (10, 10, 10))
 
     # move character if key is pressed
     for event in pygame.event.get():
@@ -130,7 +133,6 @@ while playing:
             velocity[0]=0
             velocity[1]=0
             
-
     # prevent player from moving off-screen
     if player_rect.left < -25:
         velocity[0] = max(0, velocity[0])
@@ -154,5 +156,7 @@ while playing:
     screen.blit(player, player_rect)
     pygame.display.flip()
 
-    if time == 120:
+    # end the game after game_time seconds
+    if time >= game_time:
+        playing = False
         game_over()
