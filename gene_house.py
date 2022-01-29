@@ -1,7 +1,7 @@
 import sys, pygame
 pygame.init()
 
-# game hyperparamets
+# game hyperparameters
 size = width, height = 512, 512
 speed = 3
 velocity = [0, 0]
@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 
 # set up Time & Score text
 font = pygame.font.Font(None, 32)
-time = "0"
+time = 0
 text = font.render("Time: "+str(time), True, (10, 10, 10))
 textpos = text.get_rect(x=100, y=10)
 score = 0
@@ -30,12 +30,18 @@ scoretextpos = text.get_rect(x=300, y=10)
 # create list of crops
 crops = []
 
-# potato class
-class Totato():
+# tomato class
+class Tomato():
 
     def __init__(self):
         self.image = pygame.image.load("assets/seeds.png")
         self.crop_rect = player_rect.copy().move(70,50)
+        self.timestamp = pygame.time.get_ticks()//1000
+
+    def check_grow(self):
+        if time - self.timestamp >= 5:
+            self.grow()
+            self.timestamp = time
 
     def grow(self):
         pass
@@ -45,8 +51,8 @@ class Totato():
 while 1:
     # tick clock & update time & score
     clock.tick(60)
-    time = str(pygame.time.get_ticks()//1000)
-    text = font.render("Time: "+time, True, (10, 10, 10))
+    time = pygame.time.get_ticks()//1000
+    text = font.render("Time: "+str(time), True, (10, 10, 10))
     score = 0
     score_text = font.render("Score: "+str(score), True, (10, 10, 10))
 
@@ -67,8 +73,15 @@ while 1:
             velocity[0]=-speed
             velocity[1]=0
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_t:
-            totato = Totato()
-            crops.append(totato)
+            tomato = Tomato()
+            valid_spot = True
+            # test if the new tomato would overlap an old one
+            for crop in crops:
+                if pygame.Rect.colliderect(tomato.crop_rect, crop.crop_rect):
+                    valid_spot = False
+            # add the tomato to crops if it doesn't overlap any other crop
+            if valid_spot:
+                crops.append(tomato)
         else:
             velocity[0]=0
             velocity[1]=0
@@ -92,6 +105,7 @@ while 1:
     screen.blit(score_text, scoretextpos)
     # draw everything in the crops list
     for crop in crops:
+        crop.check_grow()
         screen.blit(crop.image, crop.crop_rect)
     screen.blit(player, player_rect)
     pygame.display.flip()
