@@ -27,6 +27,20 @@ score = 0
 score_text = font.render("Score: "+str(score), True, (10, 10, 10))
 scoretextpos = text.get_rect(x=300, y=10)
 
+# create list of crops
+crops = []
+
+# potato class
+class Potato():
+
+    def __init__(self):
+        self.image = pygame.image.load("potato_seeds.png")
+        self.crop_rect = player_rect
+
+    def grow(self):
+        pass
+
+
 # main game loop
 while 1:
     # tick clock & update time & score
@@ -52,9 +66,13 @@ while 1:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             velocity[0]=-speed
             velocity[1]=0
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+            potato = Potato()
+            crops.append(potato)
         else:
             velocity[0]=0
             velocity[1]=0
+            
 
     # prevent player from moving off-screen
     if player_rect.left < -25:
@@ -73,4 +91,7 @@ while 1:
     screen.blit(player, player_rect)
     screen.blit(text, textpos)
     screen.blit(score_text, scoretextpos)
+    # draw everything in the crops list
+    for crop in crops:
+        screen.blit(crop.image, crop.crop_rect)
     pygame.display.flip()
